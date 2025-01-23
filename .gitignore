@@ -18,7 +18,9 @@ lib/
 .idea
 lib64/
 css/
+css
 img/
+img
 parts/
 sdist/
 var/
