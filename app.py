@@ -1,22 +1,40 @@
-from flask import Flask, render_template
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
-app = Flask(__name__)
+class MyHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        if self.path == '/':
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+            with open('html/index.html', 'rb') as file:
+                self.wfile.write(file.read())
+        elif self.path == '/catalog':
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+            with open('html/catalog.html', 'rb') as file:
+                self.wfile.write(file.read())
+        elif self.path == '/category':
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+            with open('html/category.html', 'rb') as file:
+                self.wfile.write(file.read())
+        elif self.path == '/contacts':
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+            with open('html/contact.html', 'rb') as file:
+                self.wfile.write(file.read())
+        else:
+            self.send_response(404)
+            self.end_headers()
 
-@app.route('/')
-def home():
-    return render_template('index.html')
+def run_server(server_class=HTTPServer, handler_class=MyHandler):
+    server_address = ('', 8000)
+    httpd = server_class(server_address, handler_class)
+    print('Starting server...')
+    httpd.serve_forever()
 
-@app.route('/catalog')
-def catalog():
-    return render_template('catalog.html')
-
-@app.route('/category')
-def category():
-    return render_template('category.html')
-
-@app.route('/contacts')
-def contacts():
-    return render_template('contact.html')
-
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    run_server()
