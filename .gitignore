@@ -17,8 +17,8 @@ eggs/
 lib/
 .idea
 lib64/
-css/
 img/
+img
 parts/
 sdist/
 var/
